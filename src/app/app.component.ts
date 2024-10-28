@@ -1,5 +1,5 @@
 import { AsyncPipe, NgIf } from '@angular/common';
-import { Component, inject, NgZone } from '@angular/core';
+import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { Subject } from 'rxjs';
 import Tesseract from 'tesseract.js';
@@ -15,7 +15,6 @@ export class AppComponent {
   title = 'ocr';
   extractedText: string = '';
   progress: Subject<number> = new Subject<number>();
-  ngZone = inject(NgZone)
 
   ngAfterViewInit() {
     this.progress.next(0);

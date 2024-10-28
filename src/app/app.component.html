@@ -237,14 +237,14 @@
 </main>
 <div>
   <input type="file" (change)="onFileSelected($event)" accept="image/*" capture="environment"/>
-  <div *ngIf="extractedText">
-    <p>Extracted Label: {{ extractedText }}</p>
-    
-  </div>
-  <div *ngIf="(progress | async) ?? 0">
+  @if (extractedText) {
+      <p>Extracted Label: {{ extractedText }}</p>
+  }
+  
+  @if ((progress | async)) {
     <p>Progress: {{ progress | async }}</p>
     <progress value="{{ progress | async }}" max="100"></progress>
-  </div>
+  }
 </div>
 
 <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->

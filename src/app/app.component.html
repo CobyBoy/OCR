@@ -238,33 +238,43 @@
   
 </main>
 <div style='padding: 1rem;'>
-  <div class="mb-3 search-container d-flex">
-    <input autocomplete='off' type="text"
-     [(ngModel)]='searchValue'
-     [typeahead]="$any((searchList | async))"
-     (typeaheadOnSelect)="onSelectSearchedLocation($event)"
-     (input)="search()"
-     [typeaheadOptionField]="'displayText'"
-     [typeaheadOptionsInScrollableView]="5"
-     [typeaheadOptionsLimit]="100"
-     [typeaheadSelectFirstItem]="true"
-     [typeaheadScrollable]="true"
-     [typeaheadAsync]="true"
-     class="form-control"
-     [adaptivePosition]="true"
-     >
-     <input
-        type="file"
-        accept="image/*"
-        capture="environment"
-        (change)="onFileSelected($event)"
-        style="display: none"
-        #fileInput
-      />
-      <div (click)="fileInput.click()" style='position: absolute;'>
-        <img src="../assets/camera.svg" alt="" width='32'>
-      </div>
+  <div style="position: relative; display: inline-block; width: 100%;">
+    <input 
+       autocomplete="off" 
+       type="text"
+       [(ngModel)]="searchValue"
+       [typeahead]="$any((searchList | async))"
+       (typeaheadOnSelect)="onSelectSearchedLocation($event)"
+       (input)="search()"
+       [typeaheadOptionField]="'displayText'"
+       [typeaheadOptionsInScrollableView]="5"
+       [typeaheadOptionsLimit]="100"
+       [typeaheadSelectFirstItem]="true"
+       [typeaheadScrollable]="true"
+       [typeaheadAsync]="true"
+       class="form-control"
+       [adaptivePosition]="true"
+       style="padding-right: 40px;" 
+    />
+  
+    <input
+       type="file"
+       accept="image/*"
+       capture="environment"
+       (change)="onFileSelected($event)"
+       style="display: none"
+       #fileInput
+    />
+    
+    <!-- Icon for taking a picture -->
+    <div 
+       (click)="fileInput.click()" 
+       style="position: absolute; top: 50%; right: 10px; transform: translateY(-50%); cursor: pointer;"
+    >
+      <img src="../assets/camera.svg" alt="Camera" width="24">
+    </div>
   </div>
+  
   @if (extractedText) {
     <p>Extracted Label: {{ extractedText }}</p>
 }

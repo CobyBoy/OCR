@@ -8,6 +8,10 @@
 <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
 
 <style>
+
+  body {
+    background-color: rgb(29, 29, 31);
+  }
   :host {
     --bright-blue: oklch(51.01% 0.274 263.83);
     --electric-violet: oklch(53.18% 0.28 296.97);
@@ -236,15 +240,45 @@
   
 </main>
 <div>
-  <input type="file" (change)="onFileSelected($event)" accept="image/*" capture="environment"/>
+  <div class="mb-3 search-container d-flex">
+    <input autocomplete='off' type="text"
+     [(ngModel)]='searchValue'
+     [typeahead]="$any((searchList | async))"
+     (typeaheadOnSelect)="onSelectSearchedLocation($event)"
+     (input)="search()"
+     [typeaheadOptionField]="'displayText'"
+     [typeaheadOptionsInScrollableView]="5"
+     [typeaheadOptionsLimit]="100"
+     [typeaheadSelectFirstItem]="true"
+     [typeaheadScrollable]="true"
+     [typeaheadAsync]="true"
+     class="form-control"
+     [adaptivePosition]="true"
+     >
+     <input
+        type="file"
+        accept="image/*"
+        capture="environment"
+        (change)="onFileSelected($event)"
+        style="display: none"
+        #fileInput
+      />
+      <button (click)="fileInput.click()"><img src="../assets/camera.png" alt="" width='32'></button>
+  </div>
   @if (extractedText) {
-      <p>Extracted Label: {{ extractedText }}</p>
-  }
-  
-  @if ((progress | async)) {
-    <p>Progress: {{ progress | async }}</p>
-    <progress value="{{ progress | async }}" max="100"></progress>
-  }
+    <p>Extracted Label: {{ extractedText }}</p>
+}
+
+@if ((progress | async) !== 0 && (progress | async) !== 100) {
+  <p>Leyendo imagen: {{ progress | async }}</p>
+  <progress value="{{ progress | async }}" max="100"></progress>
+}
+@if ((progress | async)===100) {
+  <p>Imagen leída con éxito</p>
+}
+<h4>Resultados de la búsqueda:</h4>
+<p style='word-break: break-all;'>{{ searchList | async  }}</p>
+<p style='word-break: break-all;'>{{ (searchList | async)?.length  }}</p>
 </div>
 
 <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
